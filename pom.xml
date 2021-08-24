@@ -6,7 +6,7 @@
     <groupId>com.fsgplus.tools</groupId>
     <artifactId>fsgplus-tools</artifactId>
     <version>1.0-SNAPSHOT</version>
-    <packaging>pom</packaging>
+    <packaging>jar</packaging>
 
 
     <parent>
@@ -19,12 +19,63 @@
     <inceptionYear>2020</inceptionYear>
     <url>https://www.fsgplus.com/</url>
 
+
     <properties>
         <fsgplus-tools.version>1.0-SNAPSHOT</fsgplus-tools.version>
+
+        <main-class>com.fsgplus.FsgplusApplication</main-class>
+
+
+        <gdoe-assets.version>1.0.0.3-SNAPSHOT</gdoe-assets.version>
     </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.9isuper.eve</groupId>
+            <artifactId>gdoe-eve-boot-core</artifactId>
+            <version>1.0.0.2-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context</artifactId>
+        </dependency>
+    </dependencies>
+
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-dependencies</artifactId>
+                <version>${spring-cloud.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>com.9isuper.eden</groupId>
+                <artifactId>gdoe-assets</artifactId>
+                <version>${gdoe-assets.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
 
     <build>
         <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-gpg-plugin</artifactId>
+                <configuration>
+                    <skip>true</skip>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-site-plugin</artifactId>
+                <version>3.7.1</version>
+            </plugin>
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>versions-maven-plugin</artifactId>
@@ -33,6 +84,21 @@
                     <processAllModules>true</processAllModules>
                     <processDependencies>true</processDependencies>
                     <newVersion>${fsgplus-tools.version}</newVersion>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>3.2.0</version>
+                <configuration>
+                    <skip>true</skip>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <mainClass>${main-class}</mainClass>
                 </configuration>
             </plugin>
         </plugins>
